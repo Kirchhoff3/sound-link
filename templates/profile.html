@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block content %}<h1 style="text-align:center">{{name}}</h1>
+<div class="mx-auto mt-5" style="width: 1000px;">
+<div class="row text-center">
+  <h5 style="text-align:center">Biography:</h5><br>
+<p style="text-align:center">{{bio}}</p> <br />
+{% if role == 'company' %}
+<h5 style="text-align:center">My Advertisements:</h5><br><br><br>
+{% for k in ad %}
+<div class="col-lg-3 col-md-6 mb-4">
+    <div class="card border-primary bg-dark text-white h-100">
+      <div class="card-body bg-dark text-white">
+        <h4 class="card-title">{{name}}</h4>
+        <p class="card-text">{{k[2]}}</p>
+      </div>
+      <div class="card-footer bg-dark text-white">
+        <a href="/applications/{{k[0]}}" class="btn btn-primary">See Applications</a>
+        {% if k[1] == 1 %}
+        <a href="/remove_ad/{{k[0]}}" class="btn btn-primary">End</a>
+        {% endif %}
+        {% if k[1] == 0 %}
+        <a href="/delete_ad/{{k[0]}}" class="btn btn-primary">Delete</a> (Finished)
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+{% endfor %}
+{% endif %}
+
+{% if role == 'musician' %}
+<h5 style="text-align:center">My Applications:</h5><br><br>
+{% for i in apps %}
+
+<div class="col-lg-3 col-md-6 mb-4">
+    <div class="card border-primary bg-dark text-white h-100">
+      <div class="card-body bg-dark text-white">
+        {% for j in ads %}
+        {% if i[1] == j[0] %}
+        <h4 class="card-title">{{j[3]}}</h4>
+        {% endif %}
+        {% endfor %}
+        <p class="card-text">{{i[6]}}</p>
+      </div>
+      <div class="card-footer text-white">
+        <a href="/cancel_app/{{i[0]}}" class="btn btn-primary">Cancel Application</a>
+        {% if i[2] == 1 %}
+        <p>Accepted</p>
+        {% endif %}
+        {% if i[2] == 0 %}
+        <p>Waiting</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  {% endif %}
+</div>
+
+</div>
+
+
+
+
+
+{% endblock %}
